@@ -1,13 +1,15 @@
 import { Map, Marker } from "mapbox-gl"
-import { useReducer } from "react"
+import { useContext, useEffect, useReducer } from "react"
 import { MapContext } from "./MapContext"
 import { mapReducer } from "./mapReducer"
 import { Popup } from "mapbox-gl"
+import { PlacesContext } from "../places/PlacesContext"
 
 
 export interface MapState {
     isMapReady: boolean,
-    map?: Map
+    map?: Map;
+    markers?: Marker[];
 }
 const INITIAL_STATE: MapState = {
     isMapReady: false,
@@ -19,7 +21,30 @@ interface Props{
 
 export const MapProvider = ({children}:Props) => {
     const [state, dispatch] = useReducer(mapReducer, INITIAL_STATE);
-   
+    const {places} = useContext(PlacesContext);
+
+    useEffect(() => {
+        state.markers?.forEach(marker => marker.remove());
+        const newMarkers: Marker[] = [];
+
+        for (const place of places) {
+            const [lng, lat] = place.center;
+            const popup = new Popup()
+                .setHTML(`
+                <h6> ${place.text} </h6>
+                <p> ${place.place_name} </p>
+                `)
+            const newMarker = new Marker()
+            .setPopup(popup)
+            .setLngLat([lng, lat])
+            .addTo(state.map!);
+
+            newMarkers.push(newMarker);
+        }
+        dispatch({ type : 'setMarkers', payload: newMarkers});
+    }, [places])
+
+
     const setMap = (map:Map) => {
 
         const myLocationPopup = new Popup()
@@ -31,7 +56,7 @@ export const MapProvider = ({children}:Props) => {
                 font-weight: 600;
                 "
                 >
-                 Location
+                Location
                 </h1>
                 `)
         
@@ -51,12 +76,16 @@ export const MapProvider = ({children}:Props) => {
         })
     }
 
-  return (
+const getRouteBetweenPoints = async(start: [number,number], end: [number,number]) => {
+
+}
+return (
     <MapContext.Provider value={{
         ...state,
         setMap,
+        getRouteBetweenPoints,
     }}>
         {children}
     </MapContext.Provider>
-  )
+)
 }

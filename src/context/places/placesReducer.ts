@@ -18,13 +18,13 @@ switch (action.type) {
     return {
         ...state,
         isLoading: true,
-        palces: [],
+        places: [],
     }
     case 'setPlaces':
     return {
         ...state,
         isLoading: false,
-        palces: action.payload
+        places: action.payload
     }
     default:
     return state;

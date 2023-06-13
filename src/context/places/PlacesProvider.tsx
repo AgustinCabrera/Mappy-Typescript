@@ -11,14 +11,14 @@ export interface PlaceState {
     isLoading: boolean;
     userLocation?: [number,number];
     isLoadingPlaces: boolean;
-    palces: Feature[];
+    places: Feature[];
 
 }
 const INITIAL_STATE: PlaceState = {
     isLoading: true,
     userLocation: undefined,
     isLoadingPlaces: false,
-    palces: [],
+    places: [],
 }
 interface Props {
     children: JSX.Element|JSX.Element[];
@@ -33,7 +33,12 @@ export const PlacesProvider = ({children}:Props) => {
     }, []);
 
     const searchPlacesByTerm = async (query:string): Promise<Feature[]> => {
-      if(query.length === 0) return []; // falta limpiar estate
+      if(query.length === 0) {
+        dispatch({type: "setPlaces", payload: []});
+        return [];
+      }
+      
+      
       if(!state.userLocation) throw new Error ("No se ha podido obtener la ubicación del usuario");
 
       dispatch({type: "setLoadingPlaces", });
