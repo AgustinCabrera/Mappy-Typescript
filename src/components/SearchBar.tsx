@@ -1,6 +1,7 @@
 import { ChangeEvent, useRef } from "react"
 import { PlacesContext } from "../context";
 import { useContext } from "react";
+import { SearchResults } from "./SearchResults";
 
 export const SearchBar = () => {
 
@@ -23,7 +24,8 @@ export const SearchBar = () => {
         placeholder="Search Place..." 
         className="form-control"
         onChange={onQueryChanged}
-         />
+        />
+        <SearchResults />
         </div>
-  )
+)
 }

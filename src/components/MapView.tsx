@@ -12,19 +12,19 @@ export const MapView = () => {
     
     const mapDiv= useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
-        if( !isLoading ){
-            const map = new Map({
-                container: mapDiv.current!, 
-                style: 'mapbox://styles/mapbox/light-v10',
-                center: userLocation,
-                zoom: 14 
+useLayoutEffect(() => {
+    if( !isLoading ){
+        const map = new Map({
+            container: mapDiv.current!, 
+            style: 'mapbox://styles/mapbox/light-v10',
+            center: userLocation,
+            zoom: 14 
                 });
                 setMap(map);
             }
             }, [isLoading] )
 
-      
+
 
         
 
