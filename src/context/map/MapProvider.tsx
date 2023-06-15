@@ -4,6 +4,8 @@ import { MapContext } from "./MapContext"
 import { mapReducer } from "./mapReducer"
 import { Popup } from "mapbox-gl"
 import { PlacesContext } from "../places/PlacesContext"
+import { directionsApi } from "../../apis"
+import { DirectionsResponse } from "../../interfaces/directions"
 
 
 export interface MapState {
@@ -77,7 +79,7 @@ export const MapProvider = ({children}:Props) => {
     }
 
 const getRouteBetweenPoints = async(start: [number,number], end: [number,number]) => {
-
+    const resp= await directionsApi.get<DirectionsResponse>(`/${start.join(',')};${end.join(',')}`);
 }
 return (
     <MapContext.Provider value={{

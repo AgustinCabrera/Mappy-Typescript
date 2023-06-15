@@ -5,8 +5,8 @@ import axios from "axios";
         params: {
             limit: 5,
             language: "en",
-            accesToken:'pk.eyJ1IjoiYWd1c3RpbmNhYnJlcmEiLCJhIjoiY2xnbTlyejcxMDNudzNwdGFoNGJyejUxdCJ9.QdeYrur31q22nXB0AiNoUw'
+            accesToken:'pk.eyJ1IjoiYWd1c3RpbmNhYnJlcmEiLCJhIjoiY2xnbTl5anlyMDNzaTNqczRzbGtmZTlnMCJ9.grcPmcSkTLOmGbe9P8bFlg'
             
         }
- })
+ }) 
 export default SearchApi;
